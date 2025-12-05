@@ -99,19 +99,14 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="py-16 lg:py-24 bg-linear-to-br from-white via-slate-50 to-blue-50 relative overflow-hidden">
-      {/* Background Decorations */}
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-blue-900 via-blue-900 to-blue-900 relative overflow-hidden">
+       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
         
-        {/* Animated dots pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute w-2 h-2 bg-slate-400 rounded-full top-10 left-10 animate-ping"></div>
-          <div className="absolute w-2 h-2 bg-slate-400 rounded-full top-20 right-20 animate-ping" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute w-2 h-2 bg-slate-400 rounded-full bottom-20 left-1/4 animate-ping" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute w-2 h-2 bg-slate-400 rounded-full bottom-10 right-1/3 animate-ping" style={{ animationDelay: '3s' }}></div>
-        </div>
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

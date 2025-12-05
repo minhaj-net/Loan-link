@@ -31,8 +31,8 @@ const AvailableLoans = () => {
     Property: Building2,
   };
 
-  // Gradient mapping based on category
-  const categoryGradients = {
+  // linear mapping based on category
+  const categorylinears = {
     Business: "from-orange-500 via-red-600 to-pink-600",
     Home: "from-blue-500 via-blue-600 to-indigo-600",
     Car: "from-purple-500 via-purple-600 to-pink-600",
@@ -94,7 +94,7 @@ const AvailableLoans = () => {
   // Loading skeleton
   if (loading) {
     return (
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <section className="py-16 lg:py-24 bg-linear-to-br from-slate-50 via-white to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="h-8 w-48 bg-slate-200 rounded-full mx-auto mb-4 animate-pulse"></div>
@@ -119,12 +119,16 @@ const AvailableLoans = () => {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
-      {/* Background Decorations */}
+    <section className="py-16 lg:py-24 bg-linear-to-br from-blue-900 via-blue-900 to-blue-900 relative overflow-hidden">
+     {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-linear(rgba(255,255,255,.02)_1px,transparent_1px),linear-linear(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
       </div>
+
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -165,7 +169,7 @@ const AvailableLoans = () => {
         >
           {loans.map((loan, index) => {
             const IconComponent = categoryIcons[loan.category] || Briefcase;
-            const gradient = categoryGradients[loan.category] || "from-blue-500 via-blue-600 to-indigo-600";
+            const linear = categorylinears[loan.category] || "from-blue-500 via-blue-600 to-indigo-600";
             const bgPattern = categoryBgPattern[loan.category] || "bg-blue-50";
             const isHovered = hoveredCard === loan._id;
 
@@ -192,9 +196,9 @@ const AvailableLoans = () => {
                       transition={{ duration: 0.6 }}
                     />
 
-                    {/* Gradient Overlay */}
+                    {/* linear Overlay */}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-t ${gradient} opacity-60 group-hover:opacity-70 transition-opacity duration-300`}
+                      className={`absolute inset-0 bg-linear-to-t ${linear} opacity-60 group-hover:opacity-70 transition-opacity duration-300`}
                     ></div>
 
                     {/* Icon Badge */}
@@ -224,7 +228,7 @@ const AvailableLoans = () => {
                         Max Loan
                       </p>
                       <p
-                        className={`text-lg font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}
+                        className={`text-lg font-bold bg-linear-to-r ${linear} bg-clip-text text-transparent`}
                       >
                         ${loan.maxLimit?.toLocaleString()}
                       </p>
@@ -233,7 +237,7 @@ const AvailableLoans = () => {
 
                   {/* Card Content */}
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
                       {loan.loanTitle}
                     </h3>
 
@@ -291,7 +295,7 @@ const AvailableLoans = () => {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`w-full bg-gradient-to-r ${gradient} text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 group/button`}
+                      className={`w-full bg-linear-to-r ${linear} text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 group/button`}
                     >
                       <span>View Details</span>
                       <motion.div
@@ -309,7 +313,7 @@ const AvailableLoans = () => {
 
                   {/* Decorative Corner */}
                   <div
-                    className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl ${gradient} opacity-10 rounded-bl-full`}
+                    className={`absolute top-0 right-0 w-20 h-20 bg-linear-to-bl ${linear} opacity-10 rounded-bl-full`}
                   ></div>
                 </motion.div>
 
@@ -323,7 +327,7 @@ const AvailableLoans = () => {
                   transition={{ duration: 0.3 }}
                   className="absolute -top-3 left-1/2 -translate-x-1/2 pointer-events-none"
                 >
-                  <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-4 py-1.5 rounded-full shadow-lg font-semibold flex items-center gap-1">
+                  <div className="bg-linear-to-r from-yellow-400 to-orange-500 text-white text-xs px-4 py-1.5 rounded-full shadow-lg font-semibold flex items-center gap-1">
                     <Shield className="w-3 h-3" />
                     <span>Secure & Fast</span>
                   </div>

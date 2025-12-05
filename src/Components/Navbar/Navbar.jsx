@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -71,7 +71,8 @@ const Navbar = () => {
               </NavLink>
             ))}
             {/* LOgin and register button here  */}
-            <motion.button
+            <Link
+            to={"/athentication"}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
@@ -83,7 +84,7 @@ const Navbar = () => {
               <span className="relative z-10 text-lg font-semibold tracking-wide">
                 Login
               </span>
-            </motion.button>
+            </Link>
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}

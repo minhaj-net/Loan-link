@@ -15,9 +15,8 @@ import {
   Calendar,
 } from "lucide-react";
 import axios from "axios";
-import { Link } from "react-router";
 
-const AvailableLoans = () => {
+const AllLoans = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +55,7 @@ const AvailableLoans = () => {
     const fetchLoans = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/available-loans"
+          "http://localhost:3000/all-loans"
         );
         setLoans(response.data);
       } catch (err) {
@@ -104,7 +103,10 @@ const AvailableLoans = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-lg h-[600px]">
+              <div
+                key={i}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg h-[600px]"
+              >
                 <div className="h-48 bg-slate-200 animate-pulse"></div>
                 <div className="p-6 space-y-4">
                   <div className="h-6 bg-slate-200 rounded animate-pulse"></div>
@@ -130,7 +132,6 @@ const AvailableLoans = () => {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
       </div>
 
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -152,7 +153,7 @@ const AvailableLoans = () => {
           </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-            Available Loan Options
+             Loan Options
           </h2>
           <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
             Choose from our wide range of loan products designed to meet your
@@ -170,7 +171,9 @@ const AvailableLoans = () => {
         >
           {loans.map((loan, index) => {
             const IconComponent = categoryIcons[loan.category] || Briefcase;
-            const linear = categorylinears[loan.category] || "from-blue-500 via-blue-600 to-indigo-600";
+            const linear =
+              categorylinears[loan.category] ||
+              "from-blue-500 via-blue-600 to-indigo-600";
             const bgPattern = categoryBgPattern[loan.category] || "bg-blue-50";
             const isHovered = hoveredCard === loan._id;
 
@@ -214,7 +217,9 @@ const AvailableLoans = () => {
                       }}
                       className="absolute top-4 right-4 w-14 h-14 bg-white rounded-xl shadow-lg flex items-center justify-center"
                     >
-                      <IconComponent className={`w-7 h-7 text-${loan.category?.toLowerCase()}-600`} />
+                      <IconComponent
+                        className={`w-7 h-7 text-${loan.category?.toLowerCase()}-600`}
+                      />
                     </motion.div>
 
                     {/* Max Loan Badge */}
@@ -249,34 +254,36 @@ const AvailableLoans = () => {
                     {/* Loan Details */}
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center gap-2 text-sm">
-                        {/* <div
+                        <div
                           className={`w-8 h-8 rounded-lg ${bgPattern} flex items-center justify-center`}
                         >
                           <TrendingUp className="w-4 h-4 text-slate-600" />
-                        </div> */}
-                        {/* <div>
+                        </div>
+                        <div>
                           <span className="text-slate-500 text-xs">
                             Interest Rate
                           </span>
                           <p className="font-semibold text-slate-700">
                             {loan.interestRate}
                           </p>
-                        </div> */}
+                        </div>
                       </div>
 
-                      {/* <div className="flex items-center gap-2 text-sm">
+                      <div className="flex items-center gap-2 text-sm">
                         <div
                           className={`w-8 h-8 rounded-lg ${bgPattern} flex items-center justify-center`}
                         >
                           <DollarSign className="w-4 h-4 text-slate-600" />
                         </div>
                         <div>
-                          <span className="text-slate-500 text-xs">Category</span>
+                          <span className="text-slate-500 text-xs">
+                            Category
+                          </span>
                           <p className="font-semibold text-slate-700">
                             {loan.category}
                           </p>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
 
                     {/* EMI Plans Tags */}
@@ -342,8 +349,12 @@ const AvailableLoans = () => {
         {loans.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="text-slate-400 text-6xl mb-4">📭</div>
-            <h3 className="text-2xl font-bold text-slate-700 mb-2">No Loans Available</h3>
-            <p className="text-slate-600">Check back later for new loan options</p>
+            <h3 className="text-2xl font-bold text-slate-700 mb-2">
+              No Loans Available
+            </h3>
+            <p className="text-slate-600">
+              Check back later for new loan options
+            </p>
           </div>
         )}
 
@@ -359,14 +370,13 @@ const AvailableLoans = () => {
             <p className="text-slate-600 mb-4">
               Can't find what you're looking for?
             </p>
-            <Link
-            to={"all-loans"}
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-slate-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-slate-900 transition-colors duration-300 shadow-lg hover:shadow-xl"
             >
-              View All Loans
-            </Link>
+              Talk to Our Loan Expert
+            </motion.button>
           </motion.div>
         )}
       </div>
@@ -374,4 +384,4 @@ const AvailableLoans = () => {
   );
 };
 
-export default AvailableLoans;
+export default AllLoans;

@@ -2,11 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useAuth } from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logout Succesfull");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -18,11 +31,11 @@ const Navbar = () => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, []); 
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "All-Loans", path: "/loans" },
+    { name: "All-Loans", path: "/all-loans" },
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -32,7 +45,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={` w-full z-50 transition-all duration-300 shadow-md ${
+      className={` fixed w-full z-50 transition-all duration-300 shadow-md ${
         scrollY > 50 ? "bg-base-100/90 backdrop-blur-md" : "bg-transparent"
       }`}
     >
@@ -71,20 +84,42 @@ const Navbar = () => {
               </NavLink>
             ))}
             {/* LOgin and register button here  */}
-            <Link
-            to={"/athentication"}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-              className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-white rounded-lg shadow-lg group bg-gradient-to-r from-blue-900 to-purple-900 hover:from-purple-900 hover:to-blue-500 transition-all duration-300"
-            >
-              <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white opacity-10 rounded-full group-hover:w-56 group-hover:h-56"></span>
-              <span className="relative z-10 text-lg font-semibold tracking-wide">
-                Login
-              </span>
-            </Link>
+            {/* Login button */}
+
+            {user ? (
+              <div>
+                {" "}
+                <button
+                  onClick={handleLogOut}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
+                  className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-white rounded-lg shadow-lg group bg-gradient-to-r from-blue-900 to-purple-900 hover:from-purple-900 hover:to-blue-500 transition-all duration-300"
+                >
+                  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white opacity-10 rounded-full group-hover:w-56 group-hover:h-56"></span>
+                  <span className="relative z-10 text-lg font-semibold tracking-wide">
+                    Log Out
+                  </span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                to={"/athentication"}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
+                className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-white rounded-lg shadow-lg group bg-gradient-to-r from-blue-900 to-purple-900 hover:from-purple-900 hover:to-blue-500 transition-all duration-300"
+              >
+                <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white opacity-10 rounded-full group-hover:w-56 group-hover:h-56"></span>
+                <span className="relative z-10 text-lg font-semibold tracking-wide">
+                  Login
+                </span>
+              </Link>
+            )}
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}

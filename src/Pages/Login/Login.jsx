@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
@@ -13,10 +13,13 @@ import {
   Clock,
 } from "lucide-react";
 import Navbar from "../../Components/Navbar/Navbar";
+import { AuthContext } from "../../Context/AuthContext/AuthContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const { handleGoogleSignIn, createUser, signInUser } = use(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -33,10 +36,42 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    createUser(formData.email, formData.password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        toast.success("Sign in Successfull");
+        setFormData({ email: "", password: "" }); 
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
   const handleSignIn = (e) => {
     e.preventDefault();
     console.log("Form submitted for sign in:", formData);
+    signInUser(formData.email, formData.password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        toast.success("Sign in Successfull");
+         setFormData({ email: "", password: "" }); 
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+  const handleGoogleSignInRow = () => {
+    console.log("Google sing in on CLiking:");
+    handleGoogleSignIn()
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        toast.success("Google sign in successfull");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   const toggleMode = () => {
@@ -214,7 +249,9 @@ const Login = () => {
 
                 {/* Submit Button */}
                 <motion.button
-                  onClick={isLogin ? handleSignIn : handleSubmit}  conditional function
+                  onClick={isLogin ? handleSignIn : handleSubmit}
+                  conditional
+                  function
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   // onClick={handleSubmit}
@@ -226,7 +263,8 @@ const Login = () => {
 
                 {/* Social Login */}
                 <div>
-                  <motion.button
+                  <button
+                    onClick={handleGoogleSignInRow}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="flex w-full items-center justify-center gap-2 py-3 bg-white border-2 border-slate-200 rounded-xl hover:border-slate-300 transition-colors"
@@ -250,7 +288,7 @@ const Login = () => {
                       />
                     </svg>
                     <span className="font-semibold text-slate-700">Google</span>
-                  </motion.button>
+                  </button>
                 </div>
               </div>
 

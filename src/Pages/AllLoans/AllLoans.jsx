@@ -15,6 +15,7 @@ import {
   Calendar,
 } from "lucide-react";
 import axios from "axios";
+import { Link } from "react-router";
 
 const AllLoans = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -300,7 +301,8 @@ const AllLoans = () => {
                     </div>
 
                     {/* View Details Button */}
-                    <motion.button
+                    <Link
+                    to={`loan-details/${loan._id}`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className={`w-full bg-linear-to-r ${linear} text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 group/button`}
@@ -316,7 +318,7 @@ const AllLoans = () => {
                       >
                         <ArrowRight className="w-5 h-5" />
                       </motion.div>
-                    </motion.button>
+                    </Link>
                   </div>
 
                   {/* Decorative Corner */}

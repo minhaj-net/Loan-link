@@ -18,6 +18,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router";
+import DashboardOverview from "../Dashboard/DashboardOverView/DashboardOverView";
 
 const LoanDetails = () => {
   const [loanData, setLoanData] = useState(null);
@@ -42,44 +43,44 @@ const LoanDetails = () => {
       const sampleData = await response.json();
       console.log(sampleData);
       // Sample data for demonstration
-      const sampdleData = {
-        loanImage:
-          "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-        loanTitle: "Home Loan",
-        description:
-          "Turn your dream home into reality with our flexible home loan options and competitive interest rates. Get up to 90% financing with minimal documentation.",
-        category: "Home",
-        interestRate: "8.5%",
-        maxLimit: 500000,
-        availableEMIPlans: [
-          "12 Months",
-          "24 Months",
-          "36 Months",
-          "60 Months",
-          "120 Months",
-        ],
-        features: [
-          "No prepayment charges after 6 months",
-          "Minimal documentation required",
-          "Quick approval within 48 hours",
-          "Flexible repayment options",
-          "Online application process",
-        ],
-        eligibility: [
-          "Age: 21 to 65 years",
-          "Minimum income: $30,000 per year",
-          "Employment: Salaried or Self-employed",
-          "Credit Score: 650 or above",
-          "Valid identification and address proof",
-        ],
-        documents: [
-          "Government-issued photo ID",
-          "Proof of income (last 3 months)",
-          "Bank statements (last 6 months)",
-          "Address proof",
-          "Property documents (if applicable)",
-        ],
-      };
+      // const sampdleData = {
+      //   loanImage:
+      //     "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+      //   loanTitle: "Home Loan",
+      //   description:
+      //     "Turn your dream home into reality with our flexible home loan options and competitive interest rates. Get up to 90% financing with minimal documentation.",
+      //   category: "Home",
+      //   interestRate: "8.5%",
+      //   maxLimit: 500000,
+      //   availableEMIPlans: [
+      //     "12 Months",
+      //     "24 Months",
+      //     "36 Months",
+      //     "60 Months",
+      //     "120 Months",
+      //   ],
+      //   features: [
+      //     "No prepayment charges after 6 months",
+      //     "Minimal documentation required",
+      //     "Quick approval within 48 hours",
+      //     "Flexible repayment options",
+      //     "Online application process",
+      //   ],
+      //   eligibility: [
+      //     "Age: 21 to 65 years",
+      //     "Minimum income: $30,000 per year",
+      //     "Employment: Salaried or Self-employed",
+      //     "Credit Score: 650 or above",
+      //     "Valid identification and address proof",
+      //   ],
+      //   documents: [
+      //     "Government-issued photo ID",
+      //     "Proof of income (last 3 months)",
+      //     "Bank statements (last 6 months)",
+      //     "Address proof",
+      //     "Property documents (if applicable)",
+      //   ],
+      // };
 
       setLoanData(sampleData);
       setLoanAmount(sampleData.maxLimit * 0.5);
@@ -398,10 +399,11 @@ const LoanDetails = () => {
                   Get approved in as fast as 24 hours
                 </p>
               </div>
-
-              <Link 
-              to={ `application-form`}
-               className="w-full btn  bg-gradient-to-r from-blue-600 to-blue-700 text-white py-7 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl mb-4">
+                  
+              <Link
+                to={`application-form`}
+                className="w-full btn  bg-gradient-to-r from-blue-600 to-blue-700 text-white py-7 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl mb-4"
+              >
                 Apply Now
               </Link>
 
@@ -445,7 +447,7 @@ const LoanDetails = () => {
                 </div>
               </div>
             </motion.div>
-
+                  <DashboardOverview></DashboardOverview>
             {/* Contact Card */}
             {/* <motion.div
               initial={{ opacity: 0, x: 20 }}

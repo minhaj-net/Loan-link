@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import { 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import {
   User,
   Mail,
   Phone,
@@ -13,30 +13,39 @@ import {
   CheckCircle,
   Lock,
   TrendingUp,
-  AlertCircle
-} from 'lucide-react';
+  AlertCircle,
+} from "lucide-react";
+import { useAuth } from "../../Hooks/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const LoanApplicationForm = () => {
+  const { user } = useAuth();
   // Auto-filled data (read-only) - would come from props or API
   const autoFilledData = {
-    userEmail: 'john.doe@example.com',
-    loanTitle: 'Home Loan',
-    interestRate: '8.5%'
+    userEmail: user?.email,
+    loanTitle: "Home Loan",
+    interestRate: "8.5%",
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   const incomeSourceOptions = [
-    'Salaried Employee',
-    'Self-Employed',
-    'Business Owner',
-    'Freelancer',
-    'Rental Income',
-    'Pension',
-    'Other'
+    "Salaried Employee",
+    "Self-Employed",
+    "Business Owner",
+    "Freelancer",
+    "Rental Income",
+    "Pension",
+    "Other",
   ];
 
   const onSubmit = async (data) => {
@@ -45,16 +54,29 @@ const LoanApplicationForm = () => {
     // Simulate API call
     setTimeout(() => {
       const applicationData = {
-        ...autoFilledData,
+      ...autoFilledData,
         ...data,
-        status: 'Pending',
-        submittedAt: new Date().toISOString()
+        status: "Pending",
+        applicationFee:"Unpaid",
+        submittedAt: new Date().toISOString(),
       };
-      
-      console.log('Application submitted:', applicationData);
+
+      console.log("Application submitted:", applicationData);
       setIsSubmitting(false);
       setSubmitSuccess(true);
-      
+
+      //Send Application data to mongodb Database with Post method
+      try {
+        const res = axios.post(
+          "http://localhost:3000/application-loan",
+          applicationData
+        );
+        toast.success("Application sent to the Admin. Waiting for response")
+        console.log("Response:", res.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
       // Reset form and success message after 3 seconds
       setTimeout(() => {
         setSubmitSuccess(false);
@@ -64,7 +86,7 @@ const LoanApplicationForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -80,7 +102,9 @@ const LoanApplicationForm = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">
             Apply for Your Loan
           </h1>
-          <p className="text-slate-600">Fill in the details below to proceed with your application</p>
+          <p className="text-slate-600">
+            Fill in the details below to proceed with your application
+          </p>
         </motion.div>
 
         {/* Success Message */}
@@ -94,8 +118,13 @@ const LoanApplicationForm = () => {
               <CheckCircle className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-green-800 text-lg">Application Submitted!</h3>
-              <p className="text-green-700">Your loan application has been successfully submitted. We'll review it shortly.</p>
+              <h3 className="font-bold text-green-800 text-lg">
+                Application Submitted!
+              </h3>
+              <p className="text-green-700">
+                Your loan application has been successfully submitted. We'll
+                review it shortly.
+              </p>
             </div>
           </motion.div>
         )}
@@ -108,32 +137,46 @@ const LoanApplicationForm = () => {
           className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden"
         >
           {/* Auto-filled Section */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-slate-200">
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 p-6 border-b border-slate-200">
             <div className="flex items-center gap-2 mb-4">
               <Lock className="w-5 h-5 text-blue-600" />
-              <h2 className="text-lg font-bold text-slate-800">Auto-filled Information</h2>
+              <h2 className="text-lg font-bold text-slate-800">
+                Auto-filled Information
+              </h2>
             </div>
             <div className="grid sm:grid-cols-3 gap-4">
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-blue-200">
                 <div className="flex items-center gap-2 mb-2">
                   <Mail className="w-4 h-4 text-slate-600" />
-                  <p className="text-xs font-semibold text-slate-600">User Email</p>
+                  <p className="text-xs font-semibold text-slate-600">
+                    User Email
+                  </p>
                 </div>
-                <p className="font-semibold text-slate-800 truncate">{autoFilledData.userEmail}</p>
+                <p className="font-semibold text-slate-800 truncate">
+                  {autoFilledData.userEmail}
+                </p>
               </div>
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-blue-200">
                 <div className="flex items-center gap-2 mb-2">
                   <FileText className="w-4 h-4 text-slate-600" />
-                  <p className="text-xs font-semibold text-slate-600">Loan Title</p>
+                  <p className="text-xs font-semibold text-slate-600">
+                    Loan Title
+                  </p>
                 </div>
-                <p className="font-semibold text-slate-800">{autoFilledData.loanTitle}</p>
+                <p className="font-semibold text-slate-800">
+                  {autoFilledData.loanTitle}
+                </p>
               </div>
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-blue-200">
                 <div className="flex items-center gap-2 mb-2">
                   <TrendingUp className="w-4 h-4 text-slate-600" />
-                  <p className="text-xs font-semibold text-slate-600">Interest Rate</p>
+                  <p className="text-xs font-semibold text-slate-600">
+                    Interest Rate
+                  </p>
                 </div>
-                <p className="font-semibold text-slate-800">{autoFilledData.interestRate}</p>
+                <p className="font-semibold text-slate-800">
+                  {autoFilledData.interestRate}
+                </p>
               </div>
             </div>
           </div>
@@ -155,12 +198,17 @@ const LoanApplicationForm = () => {
                     </label>
                     <input
                       type="text"
-                      {...register('firstName', { 
-                        required: 'First name is required',
-                        minLength: { value: 2, message: 'Minimum 2 characters' }
+                      {...register("firstName", {
+                        required: "First name is required",
+                        minLength: {
+                          value: 2,
+                          message: "Minimum 2 characters",
+                        },
                       })}
                       className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                        errors.firstName ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                        errors.firstName
+                          ? "border-red-500 focus:border-red-600"
+                          : "border-slate-200 focus:border-blue-500"
                       }`}
                       placeholder="John"
                     />
@@ -179,12 +227,17 @@ const LoanApplicationForm = () => {
                     </label>
                     <input
                       type="text"
-                      {...register('lastName', { 
-                        required: 'Last name is required',
-                        minLength: { value: 2, message: 'Minimum 2 characters' }
+                      {...register("lastName", {
+                        required: "Last name is required",
+                        minLength: {
+                          value: 2,
+                          message: "Minimum 2 characters",
+                        },
                       })}
                       className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                        errors.lastName ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                        errors.lastName
+                          ? "border-red-500 focus:border-red-600"
+                          : "border-slate-200 focus:border-blue-500"
                       }`}
                       placeholder="Doe"
                     />
@@ -205,15 +258,17 @@ const LoanApplicationForm = () => {
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
                         type="tel"
-                        {...register('contactNumber', { 
-                          required: 'Contact number is required',
-                          pattern: { 
-                            value: /^[0-9+\s()-]{10,}$/, 
-                            message: 'Invalid phone number' 
-                          }
+                        {...register("contactNumber", {
+                          required: "Contact number is required",
+                          pattern: {
+                            value: /^[0-9+\s()-]{10,}$/,
+                            message: "Invalid phone number",
+                          },
                         })}
                         className={`w-full pl-12 pr-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.contactNumber ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                          errors.contactNumber
+                            ? "border-red-500 focus:border-red-600"
+                            : "border-slate-200 focus:border-blue-500"
                         }`}
                         placeholder="+1 (555) 123-4567"
                       />
@@ -229,18 +284,21 @@ const LoanApplicationForm = () => {
                   {/* National ID / Passport Number */}
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      National ID / Passport Number <span className="text-red-500">*</span>
+                      National ID / Passport Number{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
                         type="text"
-                        {...register('nationalId', { 
-                          required: 'ID/Passport number is required',
-                          minLength: { value: 5, message: 'Invalid ID number' }
+                        {...register("nationalId", {
+                          required: "ID/Passport number is required",
+                          minLength: { value: 5, message: "Invalid ID number" },
                         })}
                         className={`w-full pl-12 pr-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.nationalId ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                          errors.nationalId
+                            ? "border-red-500 focus:border-red-600"
+                            : "border-slate-200 focus:border-blue-500"
                         }`}
                         placeholder="A12345678"
                       />
@@ -268,14 +326,20 @@ const LoanApplicationForm = () => {
                       Income Source <span className="text-red-500">*</span>
                     </label>
                     <select
-                      {...register('incomeSource', { required: 'Income source is required' })}
+                      {...register("incomeSource", {
+                        required: "Income source is required",
+                      })}
                       className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                        errors.incomeSource ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                        errors.incomeSource
+                          ? "border-red-500 focus:border-red-600"
+                          : "border-slate-200 focus:border-blue-500"
                       }`}
                     >
                       <option value="">Select income source</option>
                       {incomeSourceOptions.map((option) => (
-                        <option key={option} value={option}>{option}</option>
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
                       ))}
                     </select>
                     {errors.incomeSource && (
@@ -295,12 +359,14 @@ const LoanApplicationForm = () => {
                       <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
                         type="number"
-                        {...register('monthlyIncome', { 
-                          required: 'Monthly income is required',
-                          min: { value: 1, message: 'Invalid income amount' }
+                        {...register("monthlyIncome", {
+                          required: "Monthly income is required",
+                          min: { value: 1, message: "Invalid income amount" },
                         })}
                         className={`w-full pl-12 pr-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.monthlyIncome ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                          errors.monthlyIncome
+                            ? "border-red-500 focus:border-red-600"
+                            : "border-slate-200 focus:border-blue-500"
                         }`}
                         placeholder="5000"
                       />
@@ -322,12 +388,17 @@ const LoanApplicationForm = () => {
                       <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
                         type="number"
-                        {...register('loanAmount', { 
-                          required: 'Loan amount is required',
-                          min: { value: 1000, message: 'Minimum loan amount is $1000' }
+                        {...register("loanAmount", {
+                          required: "Loan amount is required",
+                          min: {
+                            value: 1000,
+                            message: "Minimum loan amount is $1000",
+                          },
                         })}
                         className={`w-full pl-12 pr-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.loanAmount ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                          errors.loanAmount
+                            ? "border-red-500 focus:border-red-600"
+                            : "border-slate-200 focus:border-blue-500"
                         }`}
                         placeholder="50000"
                       />
@@ -347,12 +418,18 @@ const LoanApplicationForm = () => {
                     </label>
                     <input
                       type="text"
-                      {...register('reasonForLoan', { 
-                        required: 'Reason is required',
-                        minLength: { value: 10, message: 'Please provide more details (min 10 characters)' }
+                      {...register("reasonForLoan", {
+                        required: "Reason is required",
+                        minLength: {
+                          value: 10,
+                          message:
+                            "Please provide more details (min 10 characters)",
+                        },
                       })}
                       className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors ${
-                        errors.reasonForLoan ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                        errors.reasonForLoan
+                          ? "border-red-500 focus:border-red-600"
+                          : "border-slate-200 focus:border-blue-500"
                       }`}
                       placeholder="Home purchase, renovation, etc."
                     />
@@ -372,20 +449,25 @@ const LoanApplicationForm = () => {
                   <MapPin className="w-5 h-5 text-purple-600" />
                   Additional Information
                 </h3>
-                
+
                 {/* Address */}
                 <div className="mb-4">
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
                     Address <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    {...register('address', { 
-                      required: 'Address is required',
-                      minLength: { value: 10, message: 'Please provide complete address' }
+                    {...register("address", {
+                      required: "Address is required",
+                      minLength: {
+                        value: 10,
+                        message: "Please provide complete address",
+                      },
                     })}
                     rows="3"
                     className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-xl focus:outline-none transition-colors resize-none ${
-                      errors.address ? 'border-red-500 focus:border-red-600' : 'border-slate-200 focus:border-blue-500'
+                      errors.address
+                        ? "border-red-500 focus:border-red-600"
+                        : "border-slate-200 focus:border-blue-500"
                     }`}
                     placeholder="Enter your complete address"
                   />
@@ -403,7 +485,7 @@ const LoanApplicationForm = () => {
                     Extra Notes
                   </label>
                   <textarea
-                    {...register('extraNotes')}
+                    {...register("extraNotes")}
                     rows="4"
                     className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-colors resize-none"
                     placeholder="Any additional information you'd like to share..."
@@ -416,7 +498,7 @@ const LoanApplicationForm = () => {
                 <button
                   onClick={handleSubmit(onSubmit)}
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-linear-to-r from-blue-600 to-blue-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>

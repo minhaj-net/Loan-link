@@ -15,38 +15,61 @@ import {
 import Navbar from "../../Components/Navbar/Navbar";
 import { AuthContext } from "../../Context/AuthContext/AuthContext";
 import toast from "react-hot-toast";
+import { saveOrUpdateUser } from "../../Utility";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const { handleGoogleSignIn, createUser, signInUser } = use(AuthContext);
+
+  const { handleGoogleSignIn, createUser, signInUser, updateUser, setUser } =
+    use(AuthContext);
   const [formData, setFormData] = useState({
-    firstName: "",
+    displayName: "",
     email: "",
     password: "",
+    role: "",
+    photoURL: "",
   });
 
+  console.log(formData);
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = (e) => {
+  console.log(formData);
+  //sign up user here
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
     createUser(formData.email, formData.password)
       .then((res) => {
         const user = res.user;
-        console.log(user);
-        toast.success("Sign in Successfull");
-        setFormData({ email: "", password: "" }); 
+
+        const photoURL = formData.photoURL;
+        const name = formData.firstName;
+
+        updateUser({ displayName: name, photoURL })
+          .then(() => {
+            // local state update (Firebase user fields অনুযায়ী)
+            setUser({ ...user, displayName: name, photoURL });
+
+            toast.success("Registration successful!");
+
+            saveOrUpdateUser({
+              name,
+              email: formData.email,
+              photoURL,
+            });
+
+            setFormData({ email: "", password: "" });
+          })
+          .catch((err) => console.error(err));
       })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+      .catch((err) => toast.error(err.message));
   };
+
   const handleSignIn = (e) => {
     e.preventDefault();
     console.log("Form submitted for sign in:", formData);
@@ -55,7 +78,12 @@ const Login = () => {
         const user = res.user;
         console.log(user);
         toast.success("Sign in Successfull");
-         setFormData({ email: "", password: "" }); 
+        setFormData({ email: "", password: "" });
+        saveOrUpdateUser({
+          name: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL
+        });
       })
       .catch((err) => {
         toast.error(err.message);
@@ -66,6 +94,11 @@ const Login = () => {
     handleGoogleSignIn()
       .then((res) => {
         const user = res.user;
+        saveOrUpdateUser({
+          name: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL,
+        });
         console.log(user);
         toast.success("Google sign in successfull");
       })
@@ -189,8 +222,8 @@ const Login = () => {
                       />
                       <input
                         type="url"
-                        name="photoUrl"
-                        value={formData.photoUrl}
+                        name="photoURL"
+                        value={formData.photoURL}
                         onChange={handleInputChange}
                         placeholder="https://example.com/your-photo.jpg"
                         className="w-full pl-12 pr-4 py-3.5 bg-white border-2 border-slate-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-slate-800 placeholder:text-slate-400"
@@ -213,6 +246,7 @@ const Login = () => {
                       >
                         <option value="">Select Role</option>
                         <option value="borrower">Borrower</option>
+                        <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
                       </select>
                     </div>

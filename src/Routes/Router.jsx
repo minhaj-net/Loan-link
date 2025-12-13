@@ -18,6 +18,8 @@ import ApprovedApplications from "../Pages/ManagerDashboard/ApprovedApplications
 import MyProfile from "../Pages/ManagerDashboard/MyProfile/MyProfile";
 import MyProfileBorrower from "../Pages/BorrowerDashboardPages/MyProfile/MyProfile";
 import MyLoans from "../Pages/BorrowerDashboardPages/MyLoans/MyLoans";
+import UpdateLoanForm from "../Pages/AdminDashboardPages/UpdateLoand/UpdateLoand";
+import UpdateLoand from "../Pages/AdminDashboardPages/UpdateLoand/UpdateLoand";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "add-loan",
         Component: AddLoan,
+      },
+      {
+        path: "all-loan/update-loans/:id",
+        Component: UpdateLoand,
       },
       {
         path: "manage-loans",

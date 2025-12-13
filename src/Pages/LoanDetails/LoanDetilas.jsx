@@ -84,7 +84,9 @@ const LoanDetails = () => {
 
       setLoanData(sampleData);
       setLoanAmount(sampleData.maxLimit * 0.5);
-      setSelectedEMI(sampleData.availableEMIPlans[2]);
+      if (sampleData.availableEMIPlans && sampleData.availableEMIPlans.length > 0) {
+        setSelectedEMI(sampleData.availableEMIPlans[0]);
+      }
     } catch (error) {
       console.error("Error fetching loan details:", error);
     } finally {
@@ -210,7 +212,7 @@ const LoanDetails = () => {
                     </div>
                     <p className="text-sm text-slate-600 mb-1">Max Limit</p>
                     <p className="text-xl font-bold text-slate-900">
-                      ${loanData.maxLimit.toLocaleString()}
+                      ${loanData.maxLimit}
                     </p>
                   </div>
                   <div className="text-center">
@@ -229,10 +231,6 @@ const LoanDetails = () => {
                     About This Loan
                   </h2>
                   <p className="text-slate-600 leading-relaxed">
-                    {loanData.description}
-                    {loanData.description}
-                    {loanData.description}
-                    {loanData.description}
                     {loanData.description}
                   </p>
                 </div>
@@ -261,17 +259,17 @@ const LoanDetails = () => {
                   </div>
                 </div> */}
 
-                {/* <div>
+                <div>
                   <h2 className="text-xl font-bold text-slate-900 mb-4">Required Documents</h2>
                   <div className="grid sm:grid-cols-2 gap-3">
-                    {loanData.documents.map((doc, index) => (
+                    {loanData.documents && loanData.documents.map((doc, index) => (
                       <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                         <FileText className="w-5 h-5 text-slate-600 flex-shrink-0" />
                         <span className="text-slate-700 text-sm">{doc}</span>
                       </div>
                     ))}
                   </div>
-                </div> */}
+                </div>
               </div>
             </motion.div>
 
@@ -298,7 +296,7 @@ const LoanDetails = () => {
                       Loan Amount
                     </label>
                     <span className="text-xl font-bold text-blue-600">
-                      ${loanAmount.toLocaleString()}
+                      ${loanAmount}
                     </span>
                   </div>
                   <input
@@ -319,7 +317,7 @@ const LoanDetails = () => {
                   />
                   <div className="flex justify-between text-xs text-slate-500 mt-2">
                     <span>$10K</span>
-                    <span>${loanData.maxLimit.toLocaleString()}</span>
+                    <span>${loanData.maxLimit}</span>
                   </div>
                 </div>
 
@@ -328,7 +326,7 @@ const LoanDetails = () => {
                     Select EMI Plan
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {loanData.availableEMIPlans.map((plan) => (
+                    {loanData.availableEMIPlans?.map((plan) => (
                       <button
                         key={plan}
                         onClick={() => setSelectedEMI(plan)}
@@ -360,13 +358,13 @@ const LoanDetails = () => {
                           Total Interest
                         </p>
                         <p className="text-lg font-semibold">
-                          ${calculatedEMI.totalInterest.toLocaleString()}
+                          ${calculatedEMI.totalInterest}
                         </p>
                       </div>
                       <div>
                         <p className="text-xs opacity-75 mb-1">Total Amount</p>
                         <p className="text-lg font-semibold">
-                          ${calculatedEMI.totalAmount.toLocaleString()}
+                          ${calculatedEMI.totalAmount}
                         </p>
                       </div>
                     </div>

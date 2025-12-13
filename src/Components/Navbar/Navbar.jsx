@@ -10,7 +10,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const { user, logOut } = useAuth();
-
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -31,14 +30,14 @@ const Navbar = () => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); 
+  }, []);
 
   const navItems = [
     { name: "Home", path: "/" },
     { name: "All-Loans", path: "/all-loans" },
-    { name: "About Us", path: "/about" },
+    !user ? { name: "About Us", path: "/about" } : null,
     { name: "Contact", path: "/contact" },
-  ];
+  ].filter(Boolean); // removes null if user exists
 
   return (
     <motion.nav
@@ -68,7 +67,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex md:items-center space-x-6">
-            {navItems.map((item) => (
+            {/* {navItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
@@ -82,10 +81,78 @@ const Navbar = () => {
               >
                 {item.name}
               </NavLink>
-            ))}
-            {/* LOgin and register button here  */}
-            {/* Login button */}
-
+            ))} */}
+            <NavLink
+              className={({ isActive }) =>
+                `relative text-base font-medium transition-colors duration-200 ${
+                  isActive
+                    ? "after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-primary after:to-secondary"
+                    : "text-gray-700 dark:text-gray-200 hover:text-primary"
+                }`
+              }
+              to={"/"}
+            >
+              Home{" "}
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `relative text-base font-medium transition-colors duration-200 ${
+                  isActive
+                    ? "after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-primary after:to-secondary"
+                    : "text-gray-700 dark:text-gray-200 hover:text-primary"
+                }`
+              }
+              to={"all-loans"}
+            >
+              All Loans
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `relative text-base font-medium transition-colors duration-200 ${
+                  isActive
+                    ? "after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-primary after:to-secondary"
+                    : "text-gray-700 dark:text-gray-200 hover:text-primary"
+                }`
+              }
+              to={"about"}
+            >
+              About Us
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `relative text-base font-medium transition-colors duration-200 ${
+                  isActive
+                    ? "after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-primary after:to-secondary"
+                    : "text-gray-700 dark:text-gray-200 hover:text-primary"
+                }`
+              }
+              to={"contact"}
+            >
+              Contact
+            </NavLink>
+            {user && (
+              <NavLink
+                className={({ isActive }) =>
+                  `relative text-base font-medium transition-colors duration-200 ${
+                    isActive
+                      ? "after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-primary after:to-secondary"
+                      : "text-gray-700 dark:text-gray-200 hover:text-primary"
+                  }`
+                }
+                to={"dashboard"}
+              >
+                Dashboard
+              </NavLink>
+            )}
+            {user && (
+              <div>
+                <img
+                  src=""
+                  className="w-9 h-9 bg-white border-purple-900 border-5 rounded-full "
+                  alt=""
+                />
+              </div>
+            )}
             {user ? (
               <div>
                 {" "}

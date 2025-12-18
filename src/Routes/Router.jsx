@@ -6,7 +6,6 @@ import AllLoans from "../Pages/AllLoans/AllLoans";
 import LoanDetails from "../Pages/LoanDetails/LoanDetilas";
 import LoanApplicationForm from "../Pages/LoanApplicationForm/LoanApplicationForm";
 import DashboardLayout from "../Pages/Dashboard/DashboardLayout";
-import test from "../Components/test";
 import DashboardOverview from "../Pages/Dashboard/DashboardOverView/DashboardOverView";
 import ManageUsers from "../Pages/AdminDashboardPages/ManageUsers/ManageUsers";
 import AllLoanAdmin from "../Pages/AdminDashboardPages/AllLoan/AllLoanAdmin";
@@ -20,6 +19,10 @@ import MyProfileBorrower from "../Pages/BorrowerDashboardPages/MyProfile/MyProfi
 import MyLoans from "../Pages/BorrowerDashboardPages/MyLoans/MyLoans";
 import UpdateLoanForm from "../Pages/AdminDashboardPages/UpdateLoand/UpdateLoand";
 import UpdateLoand from "../Pages/AdminDashboardPages/UpdateLoand/UpdateLoand";
+import ManagerManageLoandetail from "../Pages/ManagerDashboard/ManagerManageLoandetails/ManagerManageLoandetail";
+import PrivateRoute from "./PrivateRoute";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
+import PaymentFailed from "../Pages/Payment/PaymentFailed";
 
 export const router = createBrowserRouter([
   {
@@ -36,17 +39,45 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-loans/loan-details/:id",
-        Component: LoanDetails,
+        element: (
+          <PrivateRoute>
+            <LoanDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-loans/loan-details/:id/application-form",
-        Component: LoanApplicationForm,
+        element: (
+          <PrivateRoute>
+            <LoanApplicationForm />
+          </PrivateRoute>
+        ),
       },
+      {
+         path: "payment/success",
+         element: (
+           <PrivateRoute>
+             <PaymentSuccess />
+           </PrivateRoute>
+         ),
+       },
+       {
+         path: "payment/failed",
+         element: (
+           <PrivateRoute>
+              <PaymentFailed />
+           </PrivateRoute>
+         ),
+       },
     ],
   },
   {
     path: "dashboard",
-    Component: DashboardLayout,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -79,6 +110,10 @@ export const router = createBrowserRouter([
       {
         path: "pending-loans",
         Component: PendingApplications,
+      },
+      {
+        path:"update-loan/:id",
+        Component:ManagerManageLoandetail,
       },
       {
         path: "approved-loans",

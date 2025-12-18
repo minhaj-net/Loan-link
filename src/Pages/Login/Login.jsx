@@ -1,5 +1,6 @@
 import React, { use, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, useNavigate } from "react-router";
 import {
   Mail,
   Lock,
@@ -20,6 +21,9 @@ import { saveOrUpdateUser } from "../../Utility";
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const { handleGoogleSignIn, createUser, signInUser, updateUser, setUser } =
     use(AuthContext);
@@ -61,6 +65,7 @@ const Login = () => {
               name,
               email: formData.email,
               photoURL,
+              role: formData.role,
             });
 
             setFormData({ email: "", password: "" });
@@ -79,6 +84,7 @@ const Login = () => {
         console.log(user);
         toast.success("Sign in Successfull");
         setFormData({ email: "", password: "" });
+        navigate(from, { replace: true });
         saveOrUpdateUser({
           name: user?.displayName,
           email: user?.email,
@@ -101,6 +107,7 @@ const Login = () => {
         });
         console.log(user);
         toast.success("Google sign in successfull");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         toast.error(err.message);

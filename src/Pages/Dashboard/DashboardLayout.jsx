@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, Outlet } from "react-router";
 import { Icon, Menu, X } from "lucide-react";
 import useRole from "../../Hooks/useRole";
+import { useAuth } from "../../Hooks/useAuth";
 
 // Sidebar Component
 const Sidebar = () => {
   const [role] = useRole();
+  const { user } = useAuth();
 
   return (
     <aside className="fixed left-0 top-0 h-full w-64 bg-base-200 shadow-xl z-50 flex flex-col">
@@ -67,12 +69,12 @@ const Sidebar = () => {
         <div className="flex items-center gap-3 p-3 bg-base-300 rounded-lg hover:bg-base-100 transition-colors cursor-pointer">
           <div className="avatar placeholder">
             <div className="bg-primary text-primary-content rounded-full w-10">
-              <span className="text-xl">U</span>
+              <img src={user?.photoURL} alt="" />
             </div>
           </div>
           <div>
-            <p className="font-semibold text-sm">User Name</p>
-            <p className="text-xs text-gray-500">user@example.com</p>
+            <p className="font-semibold text-sm">{user?.displayName}</p>
+            <p className="text-xs text-gray-500">{user?.email}</p>
           </div>
         </div>
       </div>
@@ -120,6 +122,9 @@ export default function App() {
         <main className="flex-1 p-4">
           <Outlet />
         </main>
+        {/* <footer>
+          <Footer></Footer>
+        </footer> */}
       </div>
     </div>
   );

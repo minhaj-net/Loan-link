@@ -104,7 +104,10 @@ const AvailableLoans = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-lg h-[600px]">
+              <div
+                key={i}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg h-[600px]"
+              >
                 <div className="h-48 bg-slate-200 animate-pulse"></div>
                 <div className="p-6 space-y-4">
                   <div className="h-6 bg-slate-200 rounded animate-pulse"></div>
@@ -121,15 +124,17 @@ const AvailableLoans = () => {
 
   return (
     <section className="py-16 lg:py-24 bg-linear-to-br from-blue-900 via-blue-900 to-blue-900 relative overflow-hidden">
-       {/* Animated Background */}
+      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        
+        <div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
       </div>
-
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -170,7 +175,9 @@ const AvailableLoans = () => {
         >
           {loans.map((loan, index) => {
             const IconComponent = categoryIcons[loan.category] || Briefcase;
-            const linear = categorylinears[loan.category] || "from-blue-500 via-blue-600 to-indigo-600";
+            const linear =
+              categorylinears[loan.category] ||
+              "from-blue-500 via-blue-600 to-indigo-600";
             const bgPattern = categoryBgPattern[loan.category] || "bg-blue-50";
             const isHovered = hoveredCard === loan._id;
 
@@ -214,7 +221,9 @@ const AvailableLoans = () => {
                       }}
                       className="absolute top-4 right-4 w-14 h-14 bg-white rounded-xl shadow-lg flex items-center justify-center"
                     >
-                      <IconComponent className={`w-7 h-7 text-${loan.category?.toLowerCase()}-600`} />
+                      <IconComponent
+                        className={`w-7 h-7 text-${loan.category?.toLowerCase()}-600`}
+                      />
                     </motion.div>
 
                     {/* Max Loan Badge */}
@@ -293,7 +302,8 @@ const AvailableLoans = () => {
                     </div>
 
                     {/* View Details Button */}
-                    <motion.button
+                    <Link
+                      to={`loan-details/${loan._id}`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className={`w-full bg-linear-to-r ${linear} text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 group/button`}
@@ -309,7 +319,7 @@ const AvailableLoans = () => {
                       >
                         <ArrowRight className="w-5 h-5" />
                       </motion.div>
-                    </motion.button>
+                    </Link>
                   </div>
 
                   {/* Decorative Corner */}
@@ -342,8 +352,12 @@ const AvailableLoans = () => {
         {loans.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="text-slate-400 text-6xl mb-4">📭</div>
-            <h3 className="text-2xl font-bold text-slate-700 mb-2">No Loans Available</h3>
-            <p className="text-slate-600">Check back later for new loan options</p>
+            <h3 className="text-2xl font-bold text-slate-700 mb-2">
+              No Loans Available
+            </h3>
+            <p className="text-slate-600">
+              Check back later for new loan options
+            </p>
           </div>
         )}
 
@@ -360,7 +374,7 @@ const AvailableLoans = () => {
               Can't find what you're looking for?
             </p>
             <Link
-            to={"all-loans"}
+              to={"all-loans"}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-slate-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-slate-900 transition-colors duration-300 shadow-lg hover:shadow-xl"

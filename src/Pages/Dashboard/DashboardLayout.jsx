@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { Icon, Menu, X } from "lucide-react";
 import useRole from "../../Hooks/useRole";
 import { useAuth } from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 // Sidebar Component
 const Sidebar = () => {
@@ -84,39 +85,37 @@ const Sidebar = () => {
 
 // Main App Component
 export default function App() {
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logout Succesfull");
+        navigate("/athentication");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
   return (
     <div className="min-h-screen bg-base-100">
       <Sidebar />
 
       <div className="flex flex-col min-h-screen ml-64">
         {/* Header */}
-        <header className="sticky top-0 z-30 bg-base-100 shadow-md h-16">
-          <div className="navbar px-4 h-full">
-            <div className="flex-none gap-2">
-              <div className="dropdown dropdown-end">
-                <button className="btn btn-ghost btn-circle">
-                  <div className="indicator">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                      />
-                    </svg>
-                    <span className="badge badge-xs badge-primary indicator-item"></span>
-                  </div>
-                </button>
-              </div>
+        <section className="sticky top-0 z-30 bg-base-100 shadow-md py-4">
+          <div className="flex justify-between sm:mx-2 md:mx-8">
+            <div></div>
+            <div className="space-x-4">
+              <Link to={"/"} className="btn btn-primary">
+                Go Back Home
+              </Link>
+              <Link onClick={handleLogOut} className="btn btn-primary">
+                Logout
+              </Link>
             </div>
           </div>
-        </header>
+        </section>
 
         {/* Main Content */}
         <main className="flex-1 p-4">

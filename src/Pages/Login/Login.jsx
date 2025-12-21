@@ -35,14 +35,14 @@ const Login = () => {
     photoURL: "",
   });
 
-  console.log(formData);
+  // console.log(formData);
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-  console.log(formData);
+  // console.log(formData);
   //sign up user here
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,9 +58,8 @@ const Login = () => {
           .then(() => {
             // local state update (Firebase user fields অনুযায়ী)
             setUser({ ...user, displayName: name, photoURL });
-
             toast.success("Registration successful!");
-
+             navigate(from, { replace: true });
             saveOrUpdateUser({
               name,
               email: formData.email,
@@ -83,6 +82,7 @@ const Login = () => {
         const user = res.user;
         console.log(user);
         toast.success("Sign in Successfull");
+         navigate(from, { replace: true });
         setFormData({ email: "", password: "" });
         navigate(from, { replace: true });
         saveOrUpdateUser({

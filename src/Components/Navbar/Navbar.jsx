@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useAuth } from "../../Hooks/useAuth";
@@ -10,10 +10,12 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const { user, logOut } = useAuth();
+  const navigate = useNavigate();
   const handleLogOut = () => {
     logOut()
       .then(() => {
         toast.success("Logout Succesfull");
+        navigate("/athentication"); 
       })
       .catch((err) => {
         toast.error(err.message);

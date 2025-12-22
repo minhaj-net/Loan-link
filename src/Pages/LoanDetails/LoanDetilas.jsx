@@ -38,49 +38,11 @@ const LoanDetails = () => {
 
   const fetchLoanDetails = async () => {
     try {
-      // Replace with your actual API call
+      // Replace with your actual API
       const response = await fetch(`https://loan-link-server-sable.vercel.app/all-loans/${id}`);
       const sampleData = await response.json();
       console.log(sampleData);
-      // Sample data for demonstration
-      // const sampdleData = {
-      //   loanImage:
-      //     "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-      //   loanTitle: "Home Loan",
-      //   description:
-      //     "Turn your dream home into reality with our flexible home loan options and competitive interest rates. Get up to 90% financing with minimal documentation.",
-      //   category: "Home",
-      //   interestRate: "8.5%",
-      //   maxLimit: 500000,
-      //   availableEMIPlans: [
-      //     "12 Months",
-      //     "24 Months",
-      //     "36 Months",
-      //     "60 Months",
-      //     "120 Months",
-      //   ],
-      //   features: [
-      //     "No prepayment charges after 6 months",
-      //     "Minimal documentation required",
-      //     "Quick approval within 48 hours",
-      //     "Flexible repayment options",
-      //     "Online application process",
-      //   ],
-      //   eligibility: [
-      //     "Age: 21 to 65 years",
-      //     "Minimum income: $30,000 per year",
-      //     "Employment: Salaried or Self-employed",
-      //     "Credit Score: 650 or above",
-      //     "Valid identification and address proof",
-      //   ],
-      //   documents: [
-      //     "Government-issued photo ID",
-      //     "Proof of income (last 3 months)",
-      //     "Bank statements (last 6 months)",
-      //     "Address proof",
-      //     "Property documents (if applicable)",
-      //   ],
-      // };
+     
 
       setLoanData(sampleData);
       setLoanAmount(sampleData.maxLimit * 0.5);

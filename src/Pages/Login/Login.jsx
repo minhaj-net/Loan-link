@@ -238,7 +238,7 @@ const Login = () => {
                     </div>
                   </div>
                 )}
-                {/* SignUP role base imput */}
+                {/* SignUP role base imput implementation*/}
                 {!isLogin && (
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">

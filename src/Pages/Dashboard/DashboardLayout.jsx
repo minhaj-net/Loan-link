@@ -102,7 +102,7 @@ export default function App() {
       <Sidebar />
 
       <div className="flex flex-col min-h-screen ml-64">
-        {/* Header */}
+        {/* Header on dahsboard*/}
         <section className="sticky top-0 z-30 bg-base-100 shadow-md py-4">
           <div className="flex justify-between sm:mx-2 md:mx-8">
             <div></div>

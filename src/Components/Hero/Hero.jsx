@@ -86,7 +86,7 @@ const HeroBanner = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Decorative Background Elements */}
+      {/* Decorative Background Elements and effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{

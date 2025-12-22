@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="bg-linear-to-r from-[#0b2347] to-[#0d335d] text-white pt-12 pb-6 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
 
-        {/* Brand */}
+        {/* Brand or Logo */}
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

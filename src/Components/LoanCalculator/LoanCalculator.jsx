@@ -391,7 +391,7 @@ const LoanCalculatorAndFAQ = () => {
         <div className="absolute inset-0 bg-[linear-linear(rgba(255,255,255,.02)_1px,transparent_1px),linear-linear(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
       </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section Header */}
+          {/* section likes  Header */}
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             whileInView={{ opacity: 1, y: 0 }}

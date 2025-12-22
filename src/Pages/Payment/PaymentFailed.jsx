@@ -13,7 +13,7 @@ const PaymentFailed = () => {
                         <FaTimesCircle className="text-6xl text-red-500" />
                     </div>
                 </div>
-
+                    {/* payment calcel route */}
                 <h2 className="text-3xl font-extrabold text-gray-800 mb-2">Payment Canceled</h2>
                 <p className="text-gray-500 mb-8 px-4">
                     Your payment process was canceled or failed. No charges were made to your account.

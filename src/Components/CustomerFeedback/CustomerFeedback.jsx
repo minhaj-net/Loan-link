@@ -211,7 +211,7 @@ const CustomerFeedback = () => {
           })}
         </motion.div>
 
-        {/* Main Carousel */}
+        {/* Main Carousel add */}
         <div 
           className="relative max-w-6xl mx-auto"
           onMouseEnter={() => setIsPaused(true)}

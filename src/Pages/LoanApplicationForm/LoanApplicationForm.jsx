@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 
 const LoanApplicationForm = () => {
   const { user } = useAuth();
-  // Auto-filled data (read-only) - would come from props or API
+  // Auto-filled data (read-only) 
   const autoFilledData = {
     userEmail: user?.email,
     loanTitle: "Home Loan",

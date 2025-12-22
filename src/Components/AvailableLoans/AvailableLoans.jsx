@@ -301,7 +301,7 @@ const AvailableLoans = () => {
                       ))}
                     </div>
 
-                    {/* View Details Button */}
+                    {/* View Details Button for view details */}
                     <Link
                       to={`loan-details/${loan._id}`}
                       whileHover={{ scale: 1.02 }}

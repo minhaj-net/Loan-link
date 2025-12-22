@@ -5,7 +5,7 @@ LoanLink is a robust and user-friendly web application designed to streamline th
 
 ## 🚀 Live Demo
 
-**[Live Application URL Placeholder]**  
+**[https://loanlink-proj.netlify.app/](https://loanlink-proj.netlify.app/)**  
 *(Deployment URL to be added)*
 
 ## ✨ Key Features
@@ -77,7 +77,7 @@ Follow these steps to set up the project locally on your machine.
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/your-username/loan-link.git
+   https://github.com/minhaj-net/Loan-link.git
     cd loan-link
     ```
 
@@ -108,10 +108,7 @@ Follow these steps to set up the project locally on your machine.
     npm run build
     ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-*Developed by [Your Name/Organization]*
+*Developed by [Minhajur Rahman MERN Stack Developer]*

@@ -5,7 +5,7 @@ import { useAuth } from '../../../Hooks/useAuth';
 import useRole from '../../../Hooks/useRole';
 
 export default function ProfileComponent() {
-  const {role}=useRole()
+  const [role]=useRole()
   console.log(role);
   const {user}=useAuth()
   return (
@@ -71,11 +71,11 @@ export default function ProfileComponent() {
             </div>
             <div>
               <p className="text-sm text-gray-500 mb-1">Role</p>
-              <p className="text-2xl font-bold text-green-600">{role?.role}</p>
+              <p className="text-2xl font-bold text-green-600">{role}</p>
             </div>
           </motion.div>
 
-          {/* Email Verified */}
+          {/* Email Verified */}  
           <motion.div
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}

@@ -56,7 +56,7 @@ const AvailableLoans = () => {
     const fetchLoans = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/available-loans"
+          "https://loan-link-server-sable.vercel.app/available-loans"
         );
         setLoans(response.data);
       } catch (err) {

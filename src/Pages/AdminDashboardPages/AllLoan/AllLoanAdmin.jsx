@@ -58,7 +58,7 @@ const DataTable = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/all-loans");
+        const res = await axios.get("https://loan-link-server-sable.vercel.app/all-loans");
         setLoans(res.data);
       } catch (error) {
         console.error("Error fetching loans:", error);
@@ -100,7 +100,7 @@ const DataTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/all-loans/${id}`)
+          .delete(`https://loan-link-server-sable.vercel.app/all-loans/${id}`)
           .then((res) => {
             if (res.data.message === "Course deleted successfully") {
               setLoans((prevCourses) =>

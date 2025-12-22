@@ -39,7 +39,7 @@ const LoanDetails = () => {
   const fetchLoanDetails = async () => {
     try {
       // Replace with your actual API call
-      const response = await fetch(`http://localhost:3000/all-loans/${id}`);
+      const response = await fetch(`https://loan-link-server-sable.vercel.app/all-loans/${id}`);
       const sampleData = await response.json();
       console.log(sampleData);
       // Sample data for demonstration

@@ -25,7 +25,7 @@ const ManagerManageLoandetail = () => {
   useEffect(() => {
     const fetchLoanData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/all-loans/${id}`);
+        const response = await axios.get(`https://loan-link-server-sable.vercel.app/all-loans/${id}`);
         const data = response.data;
         
         // Pre-fill form
@@ -91,7 +91,7 @@ const ManagerManageLoandetail = () => {
 
       // 3. Send Update Request
       const response = await axios.put(
-        `http://localhost:3000/all-loans/${id}`,
+        `https://loan-link-server-sable.vercel.app/all-loans/${id}`,
         updatedData
       );
 

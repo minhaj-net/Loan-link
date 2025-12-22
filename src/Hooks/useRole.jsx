@@ -11,7 +11,7 @@ const useRole = () => {
     enabled: !!user?.email, // prevents running when email not available
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/user/role/${user?.email}`
+        `https://loan-link-server-sable.vercel.app/user/role/${user?.email}`
       );
       return res.data.role; // FIXED
     },

@@ -14,7 +14,7 @@ const UpdateLoand = () => {
   useEffect(() => {
     const fetchLoan = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/all-loans/${id}`);
+        const res = await axios.get(`https://loan-link-server-sable.vercel.app/all-loans/${id}`);
         setLoan(res.data);
       } catch (error) {
         console.error("Error:", error);
@@ -48,7 +48,7 @@ const UpdateLoand = () => {
   const onSubmit = (data) => {
     console.log("Form Data:", data);
     axios
-      .put(`http://localhost:3000/all-loans/${id}`, data)
+      .put(`https://loan-link-server-sable.vercel.app/all-loans/${id}`, data)
       .then(() => {
         toast.success("✅ Loan updated successfully!");
       })

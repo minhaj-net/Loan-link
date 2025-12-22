@@ -68,7 +68,7 @@ const LoanApplicationForm = () => {
       //Send Application data to mongodb Database with Post method
       try {
         const res = axios.post(
-          "http://localhost:3000/application-loan",
+          "https://loan-link-server-sable.vercel.app/application-loan",
           applicationData
         );
         toast.success("Application sent to the Admin. Waiting for response")

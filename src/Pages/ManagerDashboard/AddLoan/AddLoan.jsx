@@ -64,7 +64,7 @@ const AddLoan = () => {
 
       // 3. Send to Backend
       const response = await axios.post(
-        "http://localhost:3000/all-loans",
+        "https://loan-link-server-sable.vercel.app/all-loans",
         loanData
       );
 

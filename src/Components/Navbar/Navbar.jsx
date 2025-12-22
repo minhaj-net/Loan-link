@@ -116,7 +116,7 @@ const Navbar = () => {
                     : "text-gray-700 dark:text-gray-200 hover:text-primary"
                 }`
               }
-              to={"about"}
+              to={"/about"}
             >
               About Us
             </NavLink>

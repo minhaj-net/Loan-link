@@ -22,7 +22,7 @@ const ManageLoans = () => {
   // Fetch Loans
   const fetchLoans = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/all-loans");
+      const response = await axios.get("https://loan-link-server-sable.vercel.app/all-loans");
       setLoans(response.data);
       setFilteredLoans(response.data);
       setLoading(false);
@@ -68,7 +68,7 @@ const ManageLoans = () => {
       if (result.isConfirmed) {
         try {
           const response = await axios.delete(
-            `http://localhost:3000/all-loans/${id}`
+            `https://loan-link-server-sable.vercel.app/all-loans/${id}`
           );
           if (response.data.deletedCount > 0 || response.status === 200) {
             Swal.fire("Deleted!", "Loan has been deleted.", "success");

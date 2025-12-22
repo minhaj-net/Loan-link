@@ -182,7 +182,7 @@ const CustomerFeedback = () => {
           </p>
         </motion.div>
 
-        {/* Stats Bar  for customer feedback*/}
+        {/* Stats Bar  for customer feedbackcd  */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
